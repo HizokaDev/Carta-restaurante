@@ -1,0 +1,723 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Donde Perto | Carta</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,500;0,600;1,500&family=Lora:wght@500;600&display=swap" rel="stylesheet">
+
+<style>
+:root {
+    --cafe: #542d1c;
+    --cafe-marco: #77583b;
+    --cafe-boton: #702f20;
+    --crema: #f8efd8;
+    --papel: #eee1bf;
+    --texto: #49392b;
+    --oro: #b08d57;
+    --oro-claro: #c9a46a;
+}
+
+* {
+    box-sizing: border-box;
+}
+
+html, body {
+    margin: 0;
+    padding: 0;
+    width: 100%;
+    height: 100%;
+    overflow: hidden;
+}
+
+body {
+    font-family: Georgia, "Times New Roman", serif;
+    color: var(--texto);
+    background: #d5c49d;
+}
+
+#app {
+    position: relative;
+    width: 100%;
+    height: 100%;
+    height: 100dvh;
+    overflow: hidden;
+    background: var(--papel);
+}
+
+#tira-pantallas {
+    display: flex;
+    width: 200%;
+    height: 100%;
+    transform: translateX(0);
+    transition: transform 0.65s ease;
+}
+
+.pantalla {
+    position: relative;
+    flex: 0 0 50%;
+    width: 50%;
+    height: 100%;
+    min-width: 0;
+    overflow: hidden;
+}
+
+/* =========================
+   PORTADA
+========================= */
+
+#pantalla-portada {
+    isolation: isolate;
+    background:
+        radial-gradient(
+            ellipse at 50% 36%,
+            rgba(255, 248, 220, 0.99) 0%,
+            rgba(250, 232, 190, 0.98) 55%,
+            rgba(226, 197, 133, 0.98) 100%
+        );
+}
+
+/* Viñeta de papel antiguo */
+#pantalla-portada::after {
+    content: "";
+    position: absolute;
+    inset: 0;
+    z-index: 0;
+    pointer-events: none;
+    background: radial-gradient(ellipse at 50% 45%, transparent 55%, rgba(120, 82, 40, 0.16) 100%);
+}
+
+/* Trama de papel, muy sutil */
+#pantalla-portada::before {
+    content: "";
+    position: absolute;
+    inset: 0;
+    z-index: 0;
+    pointer-events: none;
+    opacity: 0.20;
+    background:
+        repeating-linear-gradient(
+            0deg,
+            transparent 0px,
+            rgba(112, 78, 37, 0.045) 1px,
+            transparent 2px,
+            transparent 5px
+        ),
+        repeating-linear-gradient(
+            90deg,
+            transparent 0px,
+            rgba(112, 78, 37, 0.035) 1px,
+            transparent 2px,
+            transparent 6px
+        );
+}
+
+/* Marco dibujado con SVG para controlar las esquinas */
+.marco-portada {
+    position: absolute;
+    inset: 0;
+    z-index: 5;
+    width: 100%;
+    height: 100%;
+    pointer-events: none;
+    display: block;
+}
+
+/* Paisaje inferior, integrado al papel */
+.ventana-paisaje {
+    position: absolute;
+    z-index: 1;
+    left: 7.5%;
+    right: 7.6%;
+    bottom: 2.2%;
+    height: 24%;
+    overflow: hidden;
+    pointer-events: none;
+}
+
+.ventana-paisaje img {
+    display: block;
+    width: 100%;
+    height: 100%;
+    object-fit: contain;
+    object-position: center bottom;
+    transform: scaleY(1.4);
+    transform-origin: center bottom;
+    clip-path: polygon(
+        0% 0%,
+        100% 0%,
+        100% 91%,
+        99% 91%,
+        98% 92%,
+        97% 95%,
+        96% 98%,
+        95% 100%,
+        5% 100%,
+        4% 98%,
+        3% 95%,
+        2% 92%,
+        1% 91%,
+        0% 91%
+    );
+    opacity: 0.58;
+    filter: sepia(0.18) saturate(0.7);
+    -webkit-mask-image: linear-gradient(to bottom, transparent 0%, #000 38%);
+            mask-image: linear-gradient(to bottom, transparent 0%, #000 38%);
+}
+
+/* Contenido central en flujo, para que el aire se reparta solo */
+.portada-contenido {
+    position: relative;
+    z-index: 3;
+    height: 100%;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    padding: 11.5% 9% 0;
+}
+
+.logo-portada {
+    display: block;
+    width: 66%;
+    max-width: 290px;
+    max-height: 34%;
+    object-fit: contain;
+    object-position: center;
+    filter: drop-shadow(0 2px 3px rgba(90, 55, 25, 0.10));
+}
+
+/* Separador central */
+.separador-portada {
+    margin-top: clamp(14px, 4.6vh, 34px);
+    width: 50%;
+    max-width: 230px;
+    height: 18px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.separador-portada::before,
+.separador-portada::after {
+    content: "";
+    height: 1px;
+    flex: 1;
+    opacity: 0.9;
+}
+
+.separador-portada::before { background: linear-gradient(90deg, transparent, #8a6a46); }
+.separador-portada::after  { background: linear-gradient(90deg, #8a6a46, transparent); }
+
+.adornado {
+    position: relative;
+    width: 24px;
+    height: 18px;
+    flex: 0 0 24px;
+    margin: 0 8px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.adornado::before {
+    content: "";
+    width: 7px;
+    height: 7px;
+    background: var(--oro);
+    outline: 1px solid #6b4a35;
+    outline-offset: 2px;
+    transform: rotate(45deg);
+}
+
+.adornado::after {
+    content: "";
+    position: absolute;
+    width: 3px;
+    height: 3px;
+    top: 7px;
+    border-radius: 50%;
+    left: -3px;
+    background: #8a6a46;
+    box-shadow: 27px 0 #8a6a46;
+}
+
+/* Frase */
+.frase-portada {
+    margin: clamp(8px, 2.2vh, 16px) 0 0;
+    width: 90%;
+    font-family: "Cormorant Garamond", Georgia, serif;
+    font-size: clamp(1.3rem, 5.4vw, 1.6rem);
+    font-style: italic;
+    font-weight: 500;
+    line-height: 1.25;
+    letter-spacing: 0.02em;
+    text-align: center;
+    color: #5b3c2d;
+}
+
+/* =========================================
+   BOTÓN — PLACA VINTAGE ORNAMENTAL
+========================================= */
+
+.boton-carta {
+    margin-top: clamp(16px, 4.6vh, 34px);
+    padding: 0;
+    border: 0;
+    background: none;
+    cursor: pointer;
+    -webkit-tap-highlight-color: transparent;
+    filter: drop-shadow(0 2px 2px rgba(60, 30, 16, 0.30))
+            drop-shadow(0 5px 8px rgba(60, 30, 16, 0.16));
+    transition: transform 0.18s ease, filter 0.18s ease;
+}
+
+/* Esquinas escalonadas (dos peldaños) */
+.placa,
+.placa-cuerpo,
+.placa-linea,
+.placa-texto {
+    display: block;
+    clip-path: polygon(
+        calc(var(--s) * 2) 0, calc(100% - var(--s) * 2) 0,
+        calc(100% - var(--s) * 2) var(--s), calc(100% - var(--s)) var(--s),
+        calc(100% - var(--s)) calc(var(--s) * 2), 100% calc(var(--s) * 2),
+        100% calc(100% - var(--s) * 2), calc(100% - var(--s)) calc(100% - var(--s) * 2),
+        calc(100% - var(--s)) calc(100% - var(--s)), calc(100% - var(--s) * 2) calc(100% - var(--s)),
+        calc(100% - var(--s) * 2) 100%, calc(var(--s) * 2) 100%,
+        calc(var(--s) * 2) calc(100% - var(--s)), var(--s) calc(100% - var(--s)),
+        var(--s) calc(100% - var(--s) * 2), 0 calc(100% - var(--s) * 2),
+        0 calc(var(--s) * 2), var(--s) calc(var(--s) * 2),
+        var(--s) var(--s), calc(var(--s) * 2) var(--s)
+    );
+}
+
+/* Filete exterior dorado */
+.placa {
+    --s: 4px;
+    padding: 1px;
+    background: linear-gradient(180deg, #c9a46a 0%, #9c7743 55%, #b8925a 100%);
+}
+
+/* Cuerpo café rojizo */
+.placa-cuerpo {
+    --s: 3.5px;
+    padding: 4px;
+    background: linear-gradient(180deg, #6e3322 0%, #5f2b1c 55%, #52251a 100%);
+}
+
+/* Línea decorativa interior */
+.placa-linea {
+    --s: 3px;
+    padding: 1px;
+    background: rgba(201, 164, 106, 0.62);
+}
+
+.placa-texto {
+    --s: 2.5px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 12px;
+    padding: 7px 16px;
+    background:
+        radial-gradient(ellipse at 50% 0%, rgba(255, 220, 170, 0.10), transparent 70%),
+        linear-gradient(180deg, #6a3121 0%, #5a291b 100%);
+    color: #f3e2bf;
+    font-family: "Lora", Georgia, serif;
+    font-size: clamp(14px, 3.7vw, 15.5px);
+    font-weight: 600;
+    letter-spacing: 0.06em;
+    white-space: nowrap;
+    text-shadow: 0 1px 0 rgba(30, 12, 6, 0.45);
+}
+
+/* Rombos dorados a ambos lados */
+.rombo {
+    display: block;
+    width: 5px;
+    height: 5px;
+    background: linear-gradient(135deg, #e3c48d, #a9824b);
+    transform: rotate(45deg);
+    box-shadow: 0 0 0 1px rgba(201, 164, 106, 0.18);
+    flex: none;
+}
+
+.boton-carta:hover {
+    transform: translateY(-1px);
+    filter: drop-shadow(0 3px 3px rgba(60, 30, 16, 0.32))
+            drop-shadow(0 7px 10px rgba(60, 30, 16, 0.18));
+}
+
+.boton-carta:hover .placa-texto {
+    color: #fbeccd;
+}
+
+.boton-carta:active {
+    transform: translateY(1px);
+}
+
+.boton-carta:focus-visible {
+    outline: 1px dashed #9c7743;
+    outline-offset: 4px;
+}
+
+/* =========================
+   CARTA DEL RESTAURANTE
+========================= */
+
+#pantalla-carta {
+    overflow-y: auto;
+    overscroll-behavior: contain;
+    background:
+        radial-gradient(
+            ellipse at top,
+            #fbf2dc 0%,
+            #f0e1bd 72%,
+            #dfc99c 100%
+        );
+    padding: 34px 23px 28px;
+    scrollbar-width: thin;
+    scrollbar-color: #a58a63 transparent;
+}
+
+.contenido-carta {
+    position: relative;
+    width: 100%;
+    max-width: 500px;
+    margin: 0 auto;
+    padding: 20px 18px 24px;
+    border: 1px solid rgba(119, 88, 59, 0.65);
+    outline: 1px solid rgba(119, 88, 59, 0.38);
+    outline-offset: 5px;
+    background: rgba(255, 250, 235, 0.36);
+}
+
+.encabezado-carta {
+    text-align: center;
+    margin-bottom: 24px;
+}
+
+.encabezado-carta h1 {
+    margin: 0;
+    color: var(--cafe);
+    font-size: clamp(27px, 7vw, 35px);
+    font-style: italic;
+    font-weight: normal;
+}
+
+.encabezado-carta p {
+    margin: 5px 0 0;
+    font-size: 13px;
+    letter-spacing: 1.4px;
+    text-transform: uppercase;
+    color: #856444;
+}
+
+.seccion-menu {
+    margin: 23px 0 0;
+}
+
+.seccion-menu h2 {
+    margin: 0 0 12px;
+    padding-bottom: 7px;
+    border-bottom: 1px solid rgba(119, 88, 59, 0.55);
+    color: #6a3c26;
+    font-size: 21px;
+    font-weight: normal;
+    font-style: italic;
+}
+
+.plato {
+    display: flex;
+    align-items: baseline;
+    gap: 8px;
+    margin: 0 0 11px;
+    font-size: 15px;
+    line-height: 1.35;
+}
+
+.plato-nombre {
+    flex: 0 1 auto;
+}
+
+.puntos {
+    flex: 1 1 auto;
+    min-width: 8px;
+    border-bottom: 1px dotted rgba(119, 88, 59, 0.5);
+    transform: translateY(-3px);
+}
+
+.precio {
+    flex: 0 0 auto;
+    white-space: nowrap;
+    color: #6b3c27;
+    font-weight: bold;
+    font-size: 14px;
+}
+
+.pie-carta {
+    margin-top: 32px;
+    padding-top: 16px;
+    border-top: 1px solid rgba(119, 88, 59, 0.5);
+    text-align: center;
+    color: #6b4a32;
+    font-size: 13px;
+    line-height: 1.65;
+}
+
+.pie-carta .frase-final {
+    font-style: italic;
+}
+
+.boton-volver {
+    display: block;
+    margin: 24px auto 0;
+    padding: 10px 18px;
+    border: 1px solid #a17b51;
+    border-radius: 4px;
+    background: #702f20;
+    color: #fff1d6;
+    font-family: Georgia, "Times New Roman", serif;
+    font-size: 15px;
+    cursor: pointer;
+}
+
+/* Pantallas altas: el aire se reparte en proporción */
+@media (min-height: 760px) {
+    .portada-contenido {
+        padding-top: 8vh;
+        padding-bottom: 27vh;
+        justify-content: space-evenly;
+    }
+    .logo-portada {
+        max-width: 74%;
+        max-height: min(42vh, 300px);
+    }
+    .separador-portada {
+        margin-top: 0;
+    }
+    .frase-portada {
+        margin-top: 0;
+        font-size: clamp(1.45rem, 5.4vw, 1.9rem);
+    }
+    .boton-carta {
+        margin-top: 0;
+    }
+    .placa-texto {
+        font-size: clamp(14px, 3.7vw, 16.5px);
+    }
+}
+</style>
+</head>
+
+<body>
+<div id="app">
+    <div id="tira-pantallas">
+
+        <!-- PORTADA -->
+        <section id="pantalla-portada" class="pantalla">
+
+            <!-- Paisaje de fondo -->
+            <div class="ventana-paisaje">
+                <img src="imagen2.png" alt="">
+            </div>
+
+            <!-- Marco ornamental -->
+            <svg
+                class="marco-portada"
+                viewBox="0 0 691 1299"
+                preserveAspectRatio="none"
+                aria-hidden="true"
+            >
+                <!-- LÍNEA EXTERIOR -->
+                <path
+                    d="
+                        M 72 29
+                        H 619
+                        C 619 43, 628 54, 642 54
+                        V 1244
+                        C 628 1244, 619 1255, 619 1269
+                        H 72
+                        C 72 1255, 63 1244, 49 1244
+                        V 54
+                        C 63 54, 72 43, 72 29
+                        Z
+                    "
+                    fill="none"
+                    stroke="#6b4a35"
+                    stroke-width="4"
+                    stroke-linejoin="round"
+                    stroke-linecap="round"
+                />
+                <!-- LÍNEA INTERIOR -->
+                <path
+                    d="
+                        M 77 37
+                        H 614
+                        C 614 50, 623 60, 634 60
+                        V 1238
+                        C 623 1238, 614 1249, 614 1261
+                        H 80
+                        C 77 1249, 68 1238, 57 1238
+                        V 60
+                        C 68 60, 77 50, 77 37
+                        Z
+                    "
+                    fill="none"
+                    stroke="#6b4a35"
+                    stroke-width="2"
+                    stroke-linejoin="round"
+                    stroke-linecap="round"
+                />
+                <!-- Ornamentos centrales del marco -->
+                <g fill="#f8ebc9" stroke="#6b4a35" stroke-width="2">
+                    <rect x="337" y="25" width="16" height="16" transform="rotate(45 345 33)"/>
+                    <rect x="337" y="1257" width="16" height="16" transform="rotate(45 345 1265)"/>
+                </g>
+                <g fill="#b08d57">
+                    <rect x="341" y="29" width="8" height="8" transform="rotate(45 345 33)"/>
+                    <rect x="341" y="1261" width="8" height="8" transform="rotate(45 345 1265)"/>
+                </g>
+            </svg>
+
+            <!-- Contenido central -->
+            <div class="portada-contenido">
+
+                <img
+                    class="logo-portada"
+                    src="logo1.png"
+                    alt="Donde Perto Restaurante"
+                >
+
+                <!-- Separador central -->
+                <div class="separador-portada" aria-hidden="true">
+                    <span class="adornado"></span>
+                </div>
+
+                <!-- Frase -->
+                <p class="frase-portada">
+                    Sabores caseros<br>
+                    en el corazón de Olmué
+                </p>
+
+                <!-- Botón funcional -->
+                <button
+                    class="boton-carta"
+                    type="button"
+                    onclick="mostrarCarta()"
+                >
+                    <span class="placa"><span class="placa-cuerpo"><span class="placa-linea"><span class="placa-texto">
+                        <i class="rombo" aria-hidden="true"></i>Mostrar carta<i class="rombo" aria-hidden="true"></i>
+                    </span></span></span></span>
+                </button>
+
+            </div>
+
+        </section>
+
+        <!-- CARTA -->
+        <section id="pantalla-carta" class="pantalla">
+
+            <div class="contenido-carta">
+
+                <header class="encabezado-carta">
+                    <h1>Donde Perto</h1>
+                    <p>Cocina familiar</p>
+                </header>
+
+                <section class="seccion-menu">
+                    <h2>Nuestros platos</h2>
+
+                    <div class="plato"><span class="plato-nombre">Filete de choclo</span><span class="puntos"></span><span class="precio">$11.500</span></div>
+                    <div class="plato"><span class="plato-nombre">Cazuela de vacuno</span><span class="puntos"></span><span class="precio">$11.500</span></div>
+                    <div class="plato"><span class="plato-nombre">Guatitas</span><span class="puntos"></span><span class="precio">$12.500</span></div>
+                    <div class="plato"><span class="plato-nombre">Carne al jugo</span><span class="puntos"></span><span class="precio">$11.000</span></div>
+                    <div class="plato"><span class="plato-nombre">Chuleta vetada</span><span class="puntos"></span><span class="precio">$10.500</span></div>
+                    <div class="plato"><span class="plato-nombre">Carne con pastelera</span><span class="puntos"></span><span class="precio">$13.500</span></div>
+                    <div class="plato"><span class="plato-nombre">Chunchules</span><span class="puntos"></span><span class="precio">$13.500</span></div>
+                    <div class="plato"><span class="plato-nombre">Costillar</span><span class="puntos"></span><span class="precio">$16.000</span></div>
+                    <div class="plato"><span class="plato-nombre">Arrollado</span><span class="puntos"></span><span class="precio">$18.000</span></div>
+                    <div class="plato"><span class="plato-nombre">Pernil</span><span class="puntos"></span><span class="precio">$19.500</span></div>
+                    <div class="plato"><span class="plato-nombre">Lomo pobre</span><span class="puntos"></span><span class="precio">$15.000</span></div>
+                    <div class="plato"><span class="plato-nombre">Pollo al horno</span><span class="puntos"></span><span class="precio">$8.000</span></div>
+                    <div class="plato"><span class="plato-nombre">Salchipapas</span><span class="puntos"></span><span class="precio">$7.000</span></div>
+                    <div class="plato"><span class="plato-nombre">Papas fritas</span><span class="puntos"></span><span class="precio">$7.000</span></div>
+                    <div class="plato"><span class="plato-nombre">Conejo</span><span class="puntos"></span><span class="precio">$18.000</span></div>
+                    <div class="plato"><span class="plato-nombre">Prietas artesanales</span><span class="puntos"></span><span class="precio">$10.500</span></div>
+                    <div class="plato"><span class="plato-nombre">Lasaña</span><span class="puntos"></span><span class="precio">$10.000</span></div>
+                </section>
+                
+                <section class="seccion-menu">
+                    <h2>Agredados</h2>
+
+                    <div class="plato"><span class="plato-nombre">Arroz</span></div>
+                    <div class="plato"><span class="plato-nombre">Puré natural</span></div>
+                    <div class="plato"><span class="plato-nombre">Papas mayo</span></div>
+                    <div class="plato"><span class="plato-nombre">Ensalada</span></div>
+                    <div class="plato"><span class="plato-nombre">Consomé</span></div>
+                    <div class="plato"><span class="plato-nombre">Papas fritas</span><span class="puntos"></span><span class="precio">$2.500</span></div>
+                </section>
+
+                <section class="seccion-menu">
+                    <h2>Empanadas</h2>
+
+                    <div class="plato"><span class="plato-nombre">Pino carne picada</span><span class="puntos"></span><span class="precio">$2.500</span></div>
+                    <div class="plato"><span class="plato-nombre">Queso</span><span class="puntos"></span><span class="precio">$3.000</span></div>
+                    <div class="plato"><span class="plato-nombre">Champi queso</span><span class="puntos"></span><span class="precio">$3.000</span></div>
+                    <div class="plato"><span class="plato-nombre">Jamón queso</span><span class="puntos"></span><span class="precio">$3.000</span></div>
+                    <div class="plato"><span class="plato-nombre">Tomate queso albahaca</span><span class="puntos"></span><span class="precio">$3.000</span></div>
+                </section>
+
+                
+
+                <section class="seccion-menu">
+                    <h2>Bebidas</h2>
+
+                    <div class="plato"><span class="plato-nombre">Bebida individual</span><span class="puntos"></span><span class="precio">$2.500</span></div>
+                    <div class="plato"><span class="plato-nombre">Jugo natural</span><span class="puntos"></span><span class="precio">$4.000</span></div>
+                    <div class="plato"><span class="plato-nombre">Agua</span><span class="puntos"></span><span class="precio">$2.000</span></div>
+                    <div class="plato"><span class="plato-nombre">Té o café</span><span class="puntos"></span><span class="precio">$2.000</span></div>
+                    <div class="plato"><span class="plato-nombre">Vino chico</span><span class="puntos"></span><span class="precio">$3.500</span></div>
+                    <div class="plato"><span class="plato-nombre">Vino grande</span><span class="puntos"></span><span class="precio">$10.000</span></div>
+                    <div class="plato"><span class="plato-nombre">Cerveza</span><span class="puntos"></span><span class="precio">$4.500</span></div>
+                </section>
+
+                <footer class="pie-carta">
+                    <div>Comida casera, sabores chilenos</div>
+                    <div class="frase-final">
+                        Gracias por preferir lo hecho con cariño.
+                    </div>
+                    <div>Donde Perto — Olmué</div>
+                </footer>
+
+                <button
+                    class="boton-volver"
+                    type="button"
+                    onclick="mostrarPortada()"
+                >
+                    Volver a portada
+                </button>
+
+            </div>
+        </section>
+
+    </div>
+</div>
+
+<script>
+function mostrarCarta() {
+    document.getElementById("tira-pantallas").style.transform =
+        "translateX(-50%)";
+}
+
+function mostrarPortada() {
+    document.getElementById("tira-pantallas").style.transform =
+        "translateX(0)";
+}
+</script>
+
+</body>
+</html>
